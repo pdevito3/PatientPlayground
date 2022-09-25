@@ -8,5 +8,4 @@ public abstract class PatientForManipulationDto
         public int? Age { get; set; }
         public string Race { get; set; }
         public string Ethnicity { get; set; }
-        public string InternalId { get; set; }
 }

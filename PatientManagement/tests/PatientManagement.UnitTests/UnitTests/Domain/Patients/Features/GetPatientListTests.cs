@@ -224,38 +224,6 @@ public class GetPatientListTests
     }
 
     [Test]
-    public async Task can_filter_patient_list_using_InternalId()
-    {
-        //Arrange
-        var fakePatientOne = FakePatient.Generate(new FakePatientForCreationDto()
-            .RuleFor(p => p.InternalId, _ => "alpha")
-            .Generate());
-        var fakePatientTwo = FakePatient.Generate(new FakePatientForCreationDto()
-            .RuleFor(p => p.InternalId, _ => "bravo")
-            .Generate());
-        var queryParameters = new PatientParametersDto() { Filters = $"InternalId == {fakePatientTwo.InternalId}" };
-
-        var patientList = new List<Patient>() { fakePatientOne, fakePatientTwo };
-        var mockDbData = patientList.AsQueryable().BuildMock();
-
-        _patientRepository
-            .Setup(x => x.Query())
-            .Returns(mockDbData);
-
-        //Act
-        var query = new GetPatientList.Query(queryParameters);
-        var handler = new GetPatientList.Handler(_patientRepository.Object, _mapper, _sieveProcessor, _heimGuard.Object);
-        var response = await handler.Handle(query, CancellationToken.None);
-
-        // Assert
-        response.Should().HaveCount(1);
-        response
-            .FirstOrDefault()
-            .Should().BeEquivalentTo(fakePatientTwo, options =>
-                options.ExcludingMissingMembers());
-    }
-
-    [Test]
     public async Task can_get_sorted_list_of_patient_by_FirstName()
     {
         //Arrange
@@ -404,40 +372,6 @@ public class GetPatientListTests
             .RuleFor(p => p.Ethnicity, _ => "bravo")
             .Generate());
         var queryParameters = new PatientParametersDto() { SortOrder = "-Ethnicity" };
-
-        var PatientList = new List<Patient>() { fakePatientOne, fakePatientTwo };
-        var mockDbData = PatientList.AsQueryable().BuildMock();
-
-        _patientRepository
-            .Setup(x => x.Query())
-            .Returns(mockDbData);
-
-        //Act
-        var query = new GetPatientList.Query(queryParameters);
-        var handler = new GetPatientList.Handler(_patientRepository.Object, _mapper, _sieveProcessor, _heimGuard.Object);
-        var response = await handler.Handle(query, CancellationToken.None);
-
-        // Assert
-        response.FirstOrDefault()
-            .Should().BeEquivalentTo(fakePatientTwo, options =>
-                options.ExcludingMissingMembers());
-        response.Skip(1)
-            .FirstOrDefault()
-            .Should().BeEquivalentTo(fakePatientOne, options =>
-                options.ExcludingMissingMembers());
-    }
-
-    [Test]
-    public async Task can_get_sorted_list_of_patient_by_InternalId()
-    {
-        //Arrange
-        var fakePatientOne = FakePatient.Generate(new FakePatientForCreationDto()
-            .RuleFor(p => p.InternalId, _ => "alpha")
-            .Generate());
-        var fakePatientTwo = FakePatient.Generate(new FakePatientForCreationDto()
-            .RuleFor(p => p.InternalId, _ => "bravo")
-            .Generate());
-        var queryParameters = new PatientParametersDto() { SortOrder = "-InternalId" };
 
         var PatientList = new List<Patient>() { fakePatientOne, fakePatientTwo };
         var mockDbData = PatientList.AsQueryable().BuildMock();

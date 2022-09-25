@@ -33,7 +33,7 @@ public class Patient : BaseEntity
     public virtual string Ethnicity { get; private set; }
 
     [Sieve(CanFilter = true, CanSort = true)]
-    public virtual string InternalId { get; private set; }
+    public virtual string InternalId { get; }
 
 
     public static Patient Create(PatientForCreationDto patientForCreationDto)
@@ -48,7 +48,6 @@ public class Patient : BaseEntity
         newPatient.Age = patientForCreationDto.Age;
         newPatient.Race = patientForCreationDto.Race;
         newPatient.Ethnicity = patientForCreationDto.Ethnicity;
-        newPatient.InternalId = patientForCreationDto.InternalId;
 
         newPatient.QueueDomainEvent(new PatientCreated(){ Patient = newPatient });
         
@@ -65,7 +64,6 @@ public class Patient : BaseEntity
         Age = patientForUpdateDto.Age;
         Race = patientForUpdateDto.Race;
         Ethnicity = patientForUpdateDto.Ethnicity;
-        InternalId = patientForUpdateDto.InternalId;
 
         QueueDomainEvent(new PatientUpdated(){ Id = Id });
     }
