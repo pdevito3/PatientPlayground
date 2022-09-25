@@ -1,0 +1,64 @@
+namespace PatientManagement.FunctionalTests.FunctionalTests.Patients;
+
+using PatientManagement.SharedTestHelpers.Fakes.Patient;
+using PatientManagement.FunctionalTests.TestUtilities;
+using PatientManagement.Domain;
+using SharedKernel.Domain;
+using FluentAssertions;
+using NUnit.Framework;
+using System.Net;
+using System.Threading.Tasks;
+
+public class GetPatientTests : TestBase
+{
+    [Test]
+    public async Task get_patient_returns_success_when_entity_exists_using_valid_auth_credentials()
+    {
+        // Arrange
+        var fakePatient = FakePatient.Generate(new FakePatientForCreationDto().Generate());
+
+        var user = await AddNewSuperAdmin();
+        _client.AddAuth(user.Identifier);
+        await InsertAsync(fakePatient);
+
+        // Act
+        var route = ApiRoutes.Patients.GetRecord.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
+        var result = await _client.GetRequestAsync(route);
+
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+            
+    [Test]
+    public async Task get_patient_returns_unauthorized_without_valid_token()
+    {
+        // Arrange
+        var fakePatient = FakePatient.Generate(new FakePatientForCreationDto().Generate());
+
+        await InsertAsync(fakePatient);
+
+        // Act
+        var route = ApiRoutes.Patients.GetRecord.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
+        var result = await _client.GetRequestAsync(route);
+
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+            
+    [Test]
+    public async Task get_patient_returns_forbidden_without_proper_scope()
+    {
+        // Arrange
+        var fakePatient = FakePatient.Generate(new FakePatientForCreationDto().Generate());
+        _client.AddAuth();
+
+        await InsertAsync(fakePatient);
+
+        // Act
+        var route = ApiRoutes.Patients.GetRecord.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
+        var result = await _client.GetRequestAsync(route);
+
+        // Assert
+        result.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+}

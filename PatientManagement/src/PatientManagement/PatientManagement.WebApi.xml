@@ -1,0 +1,320 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PatientManagement</name>
+    </assembly>
+    <members>
+        <member name="M:PatientManagement.Controllers.v1.PatientsController.GetPatients(PatientManagement.Domain.Patients.Dtos.PatientParametersDto)">
+             <summary>
+             Gets a list of all Patients.
+             </summary>
+             <response code="200">Patient list returned successfully.</response>
+             <response code="400">Patient has missing/invalid values.</response>
+             <response code="401">This request was not able to be authenticated.</response>
+             <response code="403">The required permissions to access this resource were not present in the given request.</response>
+             <response code="500">There was an error on the server while creating the Patient.</response>
+             <remarks>
+             Requests can be narrowed down with a variety of query string values:
+             ## Query String Parameters
+             - **PageNumber**: An integer value that designates the page of records that should be returned.
+             - **PageSize**: An integer value that designates the number of records returned on the given page that you would like to return. This value is capped by the internal MaxPageSize.
+             - **SortOrder**: A comma delimited ordered list of property names to sort by. Adding a `-` before the name switches to sorting descendingly.
+             - **Filters**: A comma delimited list of fields to filter by formatted as `{Name}{Operator}{Value}` where
+                 - {Name} is the name of a filterable property. You can also have multiple names (for OR logic) by enclosing them in brackets and using a pipe delimiter, eg. `(LikeCount|CommentCount)>10` asks if LikeCount or CommentCount is >10
+                 - {Operator} is one of the Operators below
+                 - {Value} is the value to use for filtering. You can also have multiple values (for OR logic) by using a pipe delimiter, eg.`Title@= new|hot` will return posts with titles that contain the text "new" or "hot"
+            
+                | Operator | Meaning                       | Operator  | Meaning                                      |
+                | -------- | ----------------------------- | --------- | -------------------------------------------- |
+                | `==`     | Equals                        |  `!@=`    | Does not Contains                            |
+                | `!=`     | Not equals                    |  `!_=`    | Does not Starts with                         |
+                | `>`      | Greater than                  |  `@=*`    | Case-insensitive string Contains             |
+                | `&lt;`   | Less than                     |  `_=*`    | Case-insensitive string Starts with          |
+                | `>=`     | Greater than or equal to      |  `==*`    | Case-insensitive string Equals               |
+                | `&lt;=`  | Less than or equal to         |  `!=*`    | Case-insensitive string Not equals           |
+                | `@=`     | Contains                      |  `!@=*`   | Case-insensitive string does not Contains    |
+                | `_=`     | Starts with                   |  `!_=*`   | Case-insensitive string does not Starts with |
+             </remarks>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.PatientsController.GetPatient(System.Guid)">
+            <summary>
+            Gets a single Patient by ID.
+            </summary>
+            <response code="200">Patient record returned successfully.</response>
+            <response code="400">Patient has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the Patient.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.PatientsController.AddPatient(PatientManagement.Domain.Patients.Dtos.PatientForCreationDto)">
+            <summary>
+            Creates a new Patient record.
+            </summary>
+            <response code="201">Patient created.</response>
+            <response code="400">Patient has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the Patient.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.PatientsController.UpdatePatient(System.Guid,PatientManagement.Domain.Patients.Dtos.PatientForUpdateDto)">
+            <summary>
+            Updates an entire existing Patient.
+            </summary>
+            <response code="204">Patient updated.</response>
+            <response code="400">Patient has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the Patient.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.PatientsController.DeletePatient(System.Guid)">
+            <summary>
+            Deletes an existing Patient record.
+            </summary>
+            <response code="204">Patient deleted.</response>
+            <response code="400">Patient has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the Patient.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.PermissionsController.GetPermissions">
+            <summary>
+            Gets a list of all available permissions.
+            </summary>
+            <response code="200">List retrieved.</response>
+            <response code="500">There was an error getting the list of permissions.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.PermissionsController.GetAssignedPermissions">
+            <summary>
+            Gets a list of the current user's assigned permissions.
+            </summary>
+            <response code="200">List retrieved.</response>
+            <response code="500">There was an error getting the list of permissions.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.RolePermissionsController.GetRolePermissions(PatientManagement.Domain.RolePermissions.Dtos.RolePermissionParametersDto)">
+             <summary>
+             Gets a list of all RolePermissions.
+             </summary>
+             <response code="200">RolePermission list returned successfully.</response>
+             <response code="400">RolePermission has missing/invalid values.</response>
+             <response code="401">This request was not able to be authenticated.</response>
+             <response code="403">The required permissions to access this resource were not present in the given request.</response>
+             <response code="500">There was an error on the server while creating the RolePermission.</response>
+             <remarks>
+             Requests can be narrowed down with a variety of query string values:
+             ## Query String Parameters
+             - **PageNumber**: An integer value that designates the page of records that should be returned.
+             - **PageSize**: An integer value that designates the number of records returned on the given page that you would like to return. This value is capped by the internal MaxPageSize.
+             - **SortOrder**: A comma delimited ordered list of property names to sort by. Adding a `-` before the name switches to sorting descendingly.
+             - **Filters**: A comma delimited list of fields to filter by formatted as `{Name}{Operator}{Value}` where
+                 - {Name} is the name of a filterable property. You can also have multiple names (for OR logic) by enclosing them in brackets and using a pipe delimiter, eg. `(LikeCount|CommentCount)>10` asks if LikeCount or CommentCount is >10
+                 - {Operator} is one of the Operators below
+                 - {Value} is the value to use for filtering. You can also have multiple values (for OR logic) by using a pipe delimiter, eg.`Title@= new|hot` will return posts with titles that contain the text "new" or "hot"
+            
+                | Operator | Meaning                       | Operator  | Meaning                                      |
+                | -------- | ----------------------------- | --------- | -------------------------------------------- |
+                | `==`     | Equals                        |  `!@=`    | Does not Contains                            |
+                | `!=`     | Not equals                    |  `!_=`    | Does not Starts with                         |
+                | `>`      | Greater than                  |  `@=*`    | Case-insensitive string Contains             |
+                | `&lt;`   | Less than                     |  `_=*`    | Case-insensitive string Starts with          |
+                | `>=`     | Greater than or equal to      |  `==*`    | Case-insensitive string Equals               |
+                | `&lt;=`  | Less than or equal to         |  `!=*`    | Case-insensitive string Not equals           |
+                | `@=`     | Contains                      |  `!@=*`   | Case-insensitive string does not Contains    |
+                | `_=`     | Starts with                   |  `!_=*`   | Case-insensitive string does not Starts with |
+             </remarks>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.RolePermissionsController.GetRolePermission(System.Guid)">
+            <summary>
+            Gets a single RolePermission by ID.
+            </summary>
+            <response code="200">RolePermission record returned successfully.</response>
+            <response code="400">RolePermission has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the RolePermission.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.RolePermissionsController.AddRolePermission(PatientManagement.Domain.RolePermissions.Dtos.RolePermissionForCreationDto)">
+            <summary>
+            Creates a new RolePermission record.
+            </summary>
+            <response code="201">RolePermission created.</response>
+            <response code="400">RolePermission has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the RolePermission.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.RolePermissionsController.UpdateRolePermission(System.Guid,PatientManagement.Domain.RolePermissions.Dtos.RolePermissionForUpdateDto)">
+            <summary>
+            Updates an entire existing RolePermission.
+            </summary>
+            <response code="204">RolePermission updated.</response>
+            <response code="400">RolePermission has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the RolePermission.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.RolePermissionsController.DeleteRolePermission(System.Guid)">
+            <summary>
+            Deletes an existing RolePermission record.
+            </summary>
+            <response code="204">RolePermission deleted.</response>
+            <response code="400">RolePermission has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the RolePermission.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.RolesController.GetRoles">
+            <summary>
+            Gets a list of all available roles.
+            </summary>
+            <response code="200">List retrieved.</response>
+            <response code="500">There was an error getting the list of roles.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.AddRole(System.Guid,System.String)">
+            <summary>
+            Adds a new role to a user.
+            </summary>
+            <response code="204">Role added.</response>
+            <response code="400">Request has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while adding the role.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.RemoveRole(System.Guid,System.String)">
+            <summary>
+            Removes a role from a User
+            </summary>
+            <response code="204">Role removed.</response>
+            <response code="400">Request has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while removing the UserRole.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.GetUsers(PatientManagement.Domain.Users.Dtos.UserParametersDto)">
+             <summary>
+             Gets a list of all Users.
+             </summary>
+             <response code="200">User list returned successfully.</response>
+             <response code="400">User has missing/invalid values.</response>
+             <response code="401">This request was not able to be authenticated.</response>
+             <response code="403">The required permissions to access this resource were not present in the given request.</response>
+             <response code="500">There was an error on the server while creating the User.</response>
+             <remarks>
+             Requests can be narrowed down with a variety of query string values:
+             ## Query String Parameters
+             - **PageNumber**: An integer value that designates the page of records that should be returned.
+             - **PageSize**: An integer value that designates the number of records returned on the given page that you would like to return. This value is capped by the internal MaxPageSize.
+             - **SortOrder**: A comma delimited ordered list of property names to sort by. Adding a `-` before the name switches to sorting descendingly.
+             - **Filters**: A comma delimited list of fields to filter by formatted as `{Name}{Operator}{Value}` where
+                 - {Name} is the name of a filterable property. You can also have multiple names (for OR logic) by enclosing them in brackets and using a pipe delimiter, eg. `(LikeCount|CommentCount)>10` asks if LikeCount or CommentCount is >10
+                 - {Operator} is one of the Operators below
+                 - {Value} is the value to use for filtering. You can also have multiple values (for OR logic) by using a pipe delimiter, eg.`Title@= new|hot` will return posts with titles that contain the text "new" or "hot"
+            
+                | Operator | Meaning                       | Operator  | Meaning                                      |
+                | -------- | ----------------------------- | --------- | -------------------------------------------- |
+                | `==`     | Equals                        |  `!@=`    | Does not Contains                            |
+                | `!=`     | Not equals                    |  `!_=`    | Does not Starts with                         |
+                | `>`      | Greater than                  |  `@=*`    | Case-insensitive string Contains             |
+                | `&lt;`   | Less than                     |  `_=*`    | Case-insensitive string Starts with          |
+                | `>=`     | Greater than or equal to      |  `==*`    | Case-insensitive string Equals               |
+                | `&lt;=`  | Less than or equal to         |  `!=*`    | Case-insensitive string Not equals           |
+                | `@=`     | Contains                      |  `!@=*`   | Case-insensitive string does not Contains    |
+                | `_=`     | Starts with                   |  `!_=*`   | Case-insensitive string does not Starts with |
+             </remarks>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.GetUser(System.Guid)">
+            <summary>
+            Gets a single User by ID.
+            </summary>
+            <response code="200">User record returned successfully.</response>
+            <response code="400">User has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the User.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.AddUser(PatientManagement.Domain.Users.Dtos.UserForCreationDto)">
+            <summary>
+            Creates a new User record.
+            </summary>
+            <response code="201">User created.</response>
+            <response code="400">User has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the User.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.UpdateUser(System.Guid,PatientManagement.Domain.Users.Dtos.UserForUpdateDto)">
+            <summary>
+            Updates an entire existing User.
+            </summary>
+            <response code="204">User updated.</response>
+            <response code="400">User has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the User.</response>
+        </member>
+        <member name="M:PatientManagement.Controllers.v1.UsersController.DeleteUser(System.Guid)">
+            <summary>
+            Deletes an existing User record.
+            </summary>
+            <response code="204">User deleted.</response>
+            <response code="400">User has missing/invalid values.</response>
+            <response code="401">This request was not able to be authenticated.</response>
+            <response code="403">The required permissions to access this resource were not present in the given request.</response>
+            <response code="500">There was an error on the server while creating the User.</response>
+        </member>
+        <member name="M:PatientManagement.Databases.EntityConfigurations.PatientConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{PatientManagement.Domain.Patients.Patient})">
+            <summary>
+            The database configuration for Patients. 
+            </summary>
+        </member>
+        <member name="M:PatientManagement.Databases.EntityConfigurations.RolePermissionConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{PatientManagement.Domain.RolePermissions.RolePermission})">
+            <summary>
+            The database configuration for RolePermissions. 
+            </summary>
+        </member>
+        <member name="M:PatientManagement.Databases.EntityConfigurations.UserConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{PatientManagement.Domain.Users.User})">
+            <summary>
+            The database configuration for Users. 
+            </summary>
+        </member>
+        <member name="M:PatientManagement.Databases.EntityConfigurations.UserRoleConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{PatientManagement.Domain.Users.UserRole})">
+            <summary>
+            The database configuration for UserRoles. 
+            </summary>
+        </member>
+        <member name="P:PatientManagement.Domain.Addresses.Address.Line1">
+            <summary>
+            Address line 1 (e.g., street, PO Box, or company name).
+            </summary>
+        </member>
+        <member name="P:PatientManagement.Domain.Addresses.Address.Line2">
+            <summary>
+            Address line 2 (e.g., apartment, suite, unit, or building).
+            </summary>
+        </member>
+        <member name="P:PatientManagement.Domain.Addresses.Address.City">
+            <summary>
+            City, district, suburb, town, or village.
+            </summary>
+        </member>
+        <member name="P:PatientManagement.Domain.Addresses.Address.State">
+            <summary>
+            State, county, province, or region.
+            </summary>
+        </member>
+        <member name="P:PatientManagement.Domain.Addresses.Address.PostalCode">
+            <summary>
+            ZIP or postal code.
+            </summary>
+        </member>
+        <member name="P:PatientManagement.Domain.Addresses.Address.Country">
+            <summary>
+            Two-letter country code <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">(ISO 3166-1 alpha-2)</a>.
+            </summary>
+        </member>
+        <member name="M:PatientManagement.Extensions.Services.WebAppServiceConfiguration.AddBoundaryServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+            <summary>
+            Registers all services in the assembly of the given interface.
+            </summary>
+        </member>
+    </members>
+</doc>

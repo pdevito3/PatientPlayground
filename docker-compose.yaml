@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+  keycloakdb:
+    image: postgres
+    ports:
+      - '49303:5432'
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    volumes:
+      - keycloak-data:/var/lib/postgresql/data
+  
+  keycloak:
+    image: sleighzy/keycloak:latest
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: keycloakdb
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      DB_SCHEMA: public
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_HTTP_PORT: 8080
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, 
+      # and it shouldn't be used in production without knowledge. It is highly recommended that you read the 
+      # PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 37821:8080
+    depends_on:
+      - keycloakdb
+
+  patientmanagement-db:
+    image: postgres
+    restart: always
+    ports:
+      - '49269:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dev_patientmanagement
+    volumes:
+      - patientmanagement-data:/var/lib/postgresql/data
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+#    port mappings: https://www.jaegertracing.io/docs/1.32/getting-started/
+    ports:
+      - "49277:5775/udp"
+      - "49276:6831/udp"
+      - "49278:6832/udp"
+      - "49279:5778"
+      - "49280:16686"
+      - "49281:14250"
+      - "49282:14268"
+      - "49283:14269"
+      - "49284:9411"
+
+        
+volumes:
+  # compose volumes marker - do not delete
+  keycloak-data:
+  patientmanagement-data:
