@@ -6,4 +6,5 @@ public abstract class PatientForManipulationDto
         public string LastName { get; set; }
         public string Race { get; set; }
         public string Ethnicity { get; set; }
+        public string Sex { get; set; }
 }

@@ -1,5 +1,6 @@
 namespace PatientManagement.Databases.EntityConfigurations;
 
+using Domain.Sexes;
 using PatientManagement.Domain.Patients;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -21,5 +22,9 @@ public sealed class PatientConfiguration : IEntityTypeConfiguration<Patient>
             opts.Property(x => x.DateOfBirth).HasColumnName("date_of_birth");
             opts.Property(x => x.Age).HasColumnName("age");
         }).Navigation(x => x.Lifespan);
+        
+        builder.Property(x => x.Sex)
+            .HasConversion(x => x.Value, x => new Sex(x))
+            .HasColumnName("sex");
     }
 }

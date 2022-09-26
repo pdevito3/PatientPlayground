@@ -33,11 +33,13 @@ public class AddPatientCommandTests : TestBase
         patientReturned.Lifespan.Age.Should().Be(expectedLifespan.Age);
         patientReturned.Race.Should().Be(fakePatientOne.Race);
         patientReturned.Ethnicity.Should().Be(fakePatientOne.Ethnicity);
+        patientReturned.Sex.Should().Be(fakePatientOne.Sex);
 
         patientCreated.FirstName.Should().Be(fakePatientOne.FirstName);
         patientCreated.LastName.Should().Be(fakePatientOne.LastName);
         patientCreated.Lifespan.Should().Be(expectedLifespan);
         patientCreated.Race.Should().Be(fakePatientOne.Race);
         patientCreated.Ethnicity.Should().Be(fakePatientOne.Ethnicity);
+        patientCreated.Sex.Value.Should().Be(fakePatientOne.Sex);
     }
 }

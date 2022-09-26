@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using Lifespans;
+using Sexes;
 using Sieve.Attributes;
 
 
@@ -22,6 +23,8 @@ public class Patient : BaseEntity
     public virtual string LastName { get; private set; }
 
     public virtual Lifespan Lifespan { get; private set; }
+
+    public virtual Sex Sex { get; private set; }
 
     [Sieve(CanFilter = true, CanSort = true)]
     public virtual string Race { get; private set; }
@@ -44,6 +47,7 @@ public class Patient : BaseEntity
         newPatient.Lifespan = new Lifespan(patientForCreationDto.Lifespan.Age, patientForCreationDto.Lifespan.DateOfBirth);
         newPatient.Race = patientForCreationDto.Race;
         newPatient.Ethnicity = patientForCreationDto.Ethnicity;
+        newPatient.Sex = new Sex(patientForCreationDto.Sex);
 
         newPatient.QueueDomainEvent(new PatientCreated(){ Patient = newPatient });
         
@@ -59,6 +63,7 @@ public class Patient : BaseEntity
         Lifespan = new Lifespan(patientForUpdateDto.Lifespan.Age, patientForUpdateDto.Lifespan.DateOfBirth);
         Race = patientForUpdateDto.Race;
         Ethnicity = patientForUpdateDto.Ethnicity;
+        Sex = new Sex(patientForUpdateDto.Sex);
 
         QueueDomainEvent(new PatientUpdated(){ Id = Id });
     }

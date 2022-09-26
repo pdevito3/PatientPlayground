@@ -31,6 +31,7 @@ public class PatientQueryTests : TestBase
         patient.Race.Should().Be(fakePatientOne.Race);
         patient.Ethnicity.Should().Be(fakePatientOne.Ethnicity);
         patient.InternalId.Should().Be(fakePatientOne.InternalId);
+        patient.Sex.Should().Be(fakePatientOne.Sex);
     }
 
     [Test]
