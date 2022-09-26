@@ -15,5 +15,11 @@ public sealed class PatientConfiguration : IEntityTypeConfiguration<Patient>
         builder.Property(o => o.InternalId)
             .HasDefaultValueSql($"concat('{Consts.DatabaseSequences.PatientInternalIdPrefix}', nextval('\"{Consts.DatabaseSequences.PatientInternalIdPrefix}\"'))")
             .IsRequired();
+        
+        builder.OwnsOne(x => x.Lifespan, opts =>
+        {
+            opts.Property(x => x.DateOfBirth).HasColumnName("date_of_birth");
+            opts.Property(x => x.Age).HasColumnName("age");
+        }).Navigation(x => x.Lifespan);
     }
 }

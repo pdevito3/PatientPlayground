@@ -9,6 +9,7 @@ using HeimGuard;
 using MapsterMapper;
 using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Sieve.Models;
 using Sieve.Services;
 
@@ -43,7 +44,7 @@ public static class GetPatientList
         {
             await _heimGuard.MustHavePermission<ForbiddenAccessException>(Permissions.CanReadPatients);
 
-            var collection = _patientRepository.Query();
+            var collection = _patientRepository.Query().AsNoTracking();
 
             var sieveModel = new SieveModel
             {

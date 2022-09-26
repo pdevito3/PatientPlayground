@@ -6,6 +6,7 @@ using PatientManagement.Domain.Patients.DomainEvents;
 using Bogus;
 using FluentAssertions;
 using NUnit.Framework;
+using PatientManagement.Domain.Lifespans;
 
 [Parallelizable]
 public class UpdatePatientTests
@@ -30,8 +31,7 @@ public class UpdatePatientTests
         // Assert
         fakePatient.FirstName.Should().Be(updatedPatient.FirstName);
         fakePatient.LastName.Should().Be(updatedPatient.LastName);
-        fakePatient.DateOfBirth.Should().Be(updatedPatient.DateOfBirth);
-        fakePatient.Age.Should().Be(updatedPatient.Age);
+        fakePatient.Lifespan.Should().Be(new Lifespan((DateOnly)updatedPatient.Lifespan.DateOfBirth));
         fakePatient.Race.Should().Be(updatedPatient.Race);
         fakePatient.Ethnicity.Should().Be(updatedPatient.Ethnicity);
     }

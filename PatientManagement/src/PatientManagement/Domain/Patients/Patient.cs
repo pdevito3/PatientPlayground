@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using Lifespans;
 using Sieve.Attributes;
 
 
@@ -20,11 +21,7 @@ public class Patient : BaseEntity
     [Sieve(CanFilter = true, CanSort = true)]
     public virtual string LastName { get; private set; }
 
-    [Sieve(CanFilter = true, CanSort = true)]
-    public virtual DateOnly? DateOfBirth { get; private set; }
-
-    [Sieve(CanFilter = true, CanSort = true)]
-    public virtual int? Age { get; private set; }
+    public virtual Lifespan Lifespan { get; private set; }
 
     [Sieve(CanFilter = true, CanSort = true)]
     public virtual string Race { get; private set; }
@@ -44,8 +41,7 @@ public class Patient : BaseEntity
 
         newPatient.FirstName = patientForCreationDto.FirstName;
         newPatient.LastName = patientForCreationDto.LastName;
-        newPatient.DateOfBirth = patientForCreationDto.DateOfBirth;
-        newPatient.Age = patientForCreationDto.Age;
+        newPatient.Lifespan = new Lifespan(patientForCreationDto.Lifespan.Age, patientForCreationDto.Lifespan.DateOfBirth);
         newPatient.Race = patientForCreationDto.Race;
         newPatient.Ethnicity = patientForCreationDto.Ethnicity;
 
@@ -60,8 +56,7 @@ public class Patient : BaseEntity
 
         FirstName = patientForUpdateDto.FirstName;
         LastName = patientForUpdateDto.LastName;
-        DateOfBirth = patientForUpdateDto.DateOfBirth;
-        Age = patientForUpdateDto.Age;
+        Lifespan = new Lifespan(patientForUpdateDto.Lifespan.Age, patientForUpdateDto.Lifespan.DateOfBirth);
         Race = patientForUpdateDto.Race;
         Ethnicity = patientForUpdateDto.Ethnicity;
 

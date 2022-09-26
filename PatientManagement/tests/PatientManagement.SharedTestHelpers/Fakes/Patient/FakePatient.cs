@@ -13,6 +13,7 @@ public class FakePatient
 
     public static Patient Generate()
     {
-        return Patient.Create(new FakePatientForCreationDto().Generate());
+        var temp = new FakePatientForCreationDto().Generate();
+        return Patient.Create(temp);
     }
 }
