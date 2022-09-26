@@ -1,5 +1,6 @@
 namespace PatientManagement.Databases.EntityConfigurations;
 
+using Domain.Ethnicities;
 using Domain.Races;
 using Domain.Sexes;
 using PatientManagement.Domain.Patients;
@@ -31,5 +32,9 @@ public sealed class PatientConfiguration : IEntityTypeConfiguration<Patient>
         builder.Property(x => x.Race)
             .HasConversion(x => x.Value, x => new Race(x))
             .HasColumnName("race");
+        
+        builder.Property(x => x.Ethnicity)
+            .HasConversion(x => x.Value, x => new Ethnicity(x))
+            .HasColumnName("ethnicity");
     }
 }

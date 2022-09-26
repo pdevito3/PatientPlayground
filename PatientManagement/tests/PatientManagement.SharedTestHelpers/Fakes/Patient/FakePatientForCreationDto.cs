@@ -1,6 +1,7 @@
 namespace PatientManagement.SharedTestHelpers.Fakes.Patient;
 
 using AutoBogus;
+using Domain.Ethnicities;
 using Domain.Races;
 using Domain.Sexes;
 using Lifespan;
@@ -13,7 +14,8 @@ public class FakePatientForCreationDto : AutoFaker<PatientForCreationDto>
     public FakePatientForCreationDto()
     {
         RuleFor(x => x.Lifespan, () => new FakeLifespanForCreationDto().Generate());
-        RuleFor(rp => rp.Sex, f => f.PickRandom(Sex.ListNames()));
-        RuleFor(rp => rp.Race, f => f.PickRandom(Race.ListNames()));
+        RuleFor(x => x.Sex, f => f.PickRandom(Sex.ListNames()));
+        RuleFor(x => x.Race, f => f.PickRandom(Race.ListNames()));
+        RuleFor(x => x.Ethnicity, f => f.PickRandom(Ethnicity.ListNames()));
     }
 }

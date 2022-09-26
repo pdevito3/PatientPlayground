@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using Ethnicities;
 using Lifespans;
 using Races;
 using Sexes;
@@ -22,13 +23,10 @@ public class Patient : BaseEntity
 
     [Sieve(CanFilter = true, CanSort = true)]
     public virtual string LastName { get; private set; }
-
     public virtual Lifespan Lifespan { get; private set; }
     public virtual Sex Sex { get; private set; }
     public virtual Race Race { get; private set; }
-
-    [Sieve(CanFilter = true, CanSort = true)]
-    public virtual string Ethnicity { get; private set; }
+    public virtual Ethnicity Ethnicity { get; private set; }
 
     [Sieve(CanFilter = true, CanSort = true)]
     public virtual string InternalId { get; }
@@ -44,7 +42,7 @@ public class Patient : BaseEntity
         newPatient.LastName = patientForCreationDto.LastName;
         newPatient.Lifespan = new Lifespan(patientForCreationDto.Lifespan.Age, patientForCreationDto.Lifespan.DateOfBirth);
         newPatient.Race = new Race(patientForCreationDto.Race);
-        newPatient.Ethnicity = patientForCreationDto.Ethnicity;
+        newPatient.Ethnicity = new Ethnicity(patientForCreationDto.Ethnicity);
         newPatient.Sex = new Sex(patientForCreationDto.Sex);
 
         newPatient.QueueDomainEvent(new PatientCreated(){ Patient = newPatient });
@@ -60,7 +58,7 @@ public class Patient : BaseEntity
         LastName = patientForUpdateDto.LastName;
         Lifespan = new Lifespan(patientForUpdateDto.Lifespan.Age, patientForUpdateDto.Lifespan.DateOfBirth);
         Race = new Race(patientForUpdateDto.Race);
-        Ethnicity = patientForUpdateDto.Ethnicity;
+        Ethnicity = new Ethnicity(patientForUpdateDto.Ethnicity);
         Sex = new Sex(patientForUpdateDto.Sex);
 
         QueueDomainEvent(new PatientUpdated(){ Id = Id });

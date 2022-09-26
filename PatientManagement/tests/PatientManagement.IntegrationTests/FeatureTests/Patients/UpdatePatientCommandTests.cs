@@ -36,7 +36,7 @@ public class UpdatePatientCommandTests : TestBase
         updatedPatient.LastName.Should().Be(updatedPatientDto.LastName);
         updatedPatient.Lifespan.Should().Be(new Lifespan((DateOnly)updatedPatientDto.Lifespan.DateOfBirth));
         updatedPatient.Race.Value.Should().Be(updatedPatientDto.Race);
-        updatedPatient.Ethnicity.Should().Be(updatedPatientDto.Ethnicity);
+        updatedPatient.Ethnicity.Value.Should().Be(updatedPatientDto.Ethnicity);
         updatedPatient.Sex.Value.Should().Be(updatedPatientDto.Sex);
         updatedPatient.InternalId.Should().Be(fakePatientOne.InternalId);
     }

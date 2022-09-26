@@ -30,6 +30,7 @@ public class Race : ValueObject
     public static Race BlackOrAfricanAmerican() => new Race(RaceEnum.BlackOrAfricanAmerican.Name);
     public static Race NativeHawaiianPacificIslander() => new Race(RaceEnum.NativeHawaiianPacificIslander.Name);
     public static Race White() => new Race(RaceEnum.White.Name);
+    public static Race Asian() => new Race(RaceEnum.Asian.Name);
 
     protected Race() { } // EF Core
 }
@@ -41,6 +42,7 @@ public abstract class RaceEnum : SmartEnum<RaceEnum>
     public static readonly RaceEnum BlackOrAfricanAmerican = new BlackOrAfricanAmericanType();
     public static readonly RaceEnum NativeHawaiianPacificIslander = new NativeHawaiianPacificIslanderType();
     public static readonly RaceEnum White = new WhiteType();
+    public static readonly RaceEnum Asian = new AsianType();
 
     protected RaceEnum(string name, int value) : base(name, value)
     {
