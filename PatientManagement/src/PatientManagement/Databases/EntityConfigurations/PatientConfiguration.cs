@@ -1,5 +1,6 @@
 namespace PatientManagement.Databases.EntityConfigurations;
 
+using Domain.Races;
 using Domain.Sexes;
 using PatientManagement.Domain.Patients;
 using Microsoft.EntityFrameworkCore;
@@ -26,5 +27,9 @@ public sealed class PatientConfiguration : IEntityTypeConfiguration<Patient>
         builder.Property(x => x.Sex)
             .HasConversion(x => x.Value, x => new Sex(x))
             .HasColumnName("sex");
+        
+        builder.Property(x => x.Race)
+            .HasConversion(x => x.Value, x => new Race(x))
+            .HasColumnName("race");
     }
 }
