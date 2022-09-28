@@ -18,10 +18,10 @@ public class GetRolePermissionListTests : TestBase
         
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
 
         // Act
-        var result = await _client.GetRequestAsync(ApiRoutes.RolePermissions.GetList);
+        var result = await FactoryClient.GetRequestAsync(ApiRoutes.RolePermissions.GetList);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -34,7 +34,7 @@ public class GetRolePermissionListTests : TestBase
         // N/A
 
         // Act
-        var result = await _client.GetRequestAsync(ApiRoutes.RolePermissions.GetList);
+        var result = await FactoryClient.GetRequestAsync(ApiRoutes.RolePermissions.GetList);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -44,10 +44,10 @@ public class GetRolePermissionListTests : TestBase
     public async Task get_rolepermission_list_returns_forbidden_without_proper_scope()
     {
         // Arrange
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         // Act
-        var result = await _client.GetRequestAsync(ApiRoutes.RolePermissions.GetList);
+        var result = await FactoryClient.GetRequestAsync(ApiRoutes.RolePermissions.GetList);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

@@ -19,12 +19,12 @@ public class UpdateUserRecordTests : TestBase
         var updatedUserDto = new FakeUserForUpdateDto { }.Generate();
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
         await InsertAsync(fakeUser);
 
         // Act
         var route = ApiRoutes.Users.Put.Replace(ApiRoutes.Users.Id, fakeUser.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedUserDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedUserDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -41,7 +41,7 @@ public class UpdateUserRecordTests : TestBase
 
         // Act
         var route = ApiRoutes.Users.Put.Replace(ApiRoutes.Users.Id, fakeUser.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedUserDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedUserDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -53,13 +53,13 @@ public class UpdateUserRecordTests : TestBase
         // Arrange
         var fakeUser = FakeUser.Generate(new FakeUserForCreationDto().Generate());
         var updatedUserDto = new FakeUserForUpdateDto { }.Generate();
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         await InsertAsync(fakeUser);
 
         // Act
         var route = ApiRoutes.Users.Put.Replace(ApiRoutes.Users.Id, fakeUser.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedUserDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedUserDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

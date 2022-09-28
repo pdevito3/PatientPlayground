@@ -18,12 +18,12 @@ public class DeleteRolePermissionTests : TestBase
         var fakeRolePermission = FakeRolePermission.Generate(new FakeRolePermissionForCreationDto().Generate());
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
         await InsertAsync(fakeRolePermission);
 
         // Act
         var route = ApiRoutes.RolePermissions.Delete.Replace(ApiRoutes.RolePermissions.Id, fakeRolePermission.Id.ToString());
-        var result = await _client.DeleteRequestAsync(route);
+        var result = await FactoryClient.DeleteRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -39,7 +39,7 @@ public class DeleteRolePermissionTests : TestBase
 
         // Act
         var route = ApiRoutes.RolePermissions.Delete.Replace(ApiRoutes.RolePermissions.Id, fakeRolePermission.Id.ToString());
-        var result = await _client.DeleteRequestAsync(route);
+        var result = await FactoryClient.DeleteRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -50,13 +50,13 @@ public class DeleteRolePermissionTests : TestBase
     {
         // Arrange
         var fakeRolePermission = FakeRolePermission.Generate(new FakeRolePermissionForCreationDto().Generate());
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         await InsertAsync(fakeRolePermission);
 
         // Act
         var route = ApiRoutes.RolePermissions.Delete.Replace(ApiRoutes.RolePermissions.Id, fakeRolePermission.Id.ToString());
-        var result = await _client.DeleteRequestAsync(route);
+        var result = await FactoryClient.DeleteRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

@@ -18,12 +18,12 @@ public class GetUserTests : TestBase
         var fakeUser = FakeUser.Generate(new FakeUserForCreationDto().Generate());
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
         await InsertAsync(fakeUser);
 
         // Act
         var route = ApiRoutes.Users.GetRecord.Replace(ApiRoutes.Users.Id, fakeUser.Id.ToString());
-        var result = await _client.GetRequestAsync(route);
+        var result = await FactoryClient.GetRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -39,7 +39,7 @@ public class GetUserTests : TestBase
 
         // Act
         var route = ApiRoutes.Users.GetRecord.Replace(ApiRoutes.Users.Id, fakeUser.Id.ToString());
-        var result = await _client.GetRequestAsync(route);
+        var result = await FactoryClient.GetRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -50,13 +50,13 @@ public class GetUserTests : TestBase
     {
         // Arrange
         var fakeUser = FakeUser.Generate(new FakeUserForCreationDto().Generate());
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         await InsertAsync(fakeUser);
 
         // Act
         var route = ApiRoutes.Users.GetRecord.Replace(ApiRoutes.Users.Id, fakeUser.Id.ToString());
-        var result = await _client.GetRequestAsync(route);
+        var result = await FactoryClient.GetRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

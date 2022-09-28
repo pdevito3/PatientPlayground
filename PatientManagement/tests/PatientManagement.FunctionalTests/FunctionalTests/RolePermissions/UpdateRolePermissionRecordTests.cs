@@ -19,12 +19,12 @@ public class UpdateRolePermissionRecordTests : TestBase
         var updatedRolePermissionDto = new FakeRolePermissionForUpdateDto { }.Generate();
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
         await InsertAsync(fakeRolePermission);
 
         // Act
         var route = ApiRoutes.RolePermissions.Put.Replace(ApiRoutes.RolePermissions.Id, fakeRolePermission.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedRolePermissionDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedRolePermissionDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -41,7 +41,7 @@ public class UpdateRolePermissionRecordTests : TestBase
 
         // Act
         var route = ApiRoutes.RolePermissions.Put.Replace(ApiRoutes.RolePermissions.Id, fakeRolePermission.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedRolePermissionDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedRolePermissionDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -53,13 +53,13 @@ public class UpdateRolePermissionRecordTests : TestBase
         // Arrange
         var fakeRolePermission = FakeRolePermission.Generate(new FakeRolePermissionForCreationDto().Generate());
         var updatedRolePermissionDto = new FakeRolePermissionForUpdateDto { }.Generate();
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         await InsertAsync(fakeRolePermission);
 
         // Act
         var route = ApiRoutes.RolePermissions.Put.Replace(ApiRoutes.RolePermissions.Id, fakeRolePermission.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedRolePermissionDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedRolePermissionDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

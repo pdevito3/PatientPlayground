@@ -10,19 +10,19 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System.Threading.Tasks;
- 
+using Microsoft.EntityFrameworkCore;
 public class TestBase
 {
-    public static IServiceScopeFactory _scopeFactory;
-    public static WebApplicationFactory<Program> _factory;
-    public static HttpClient _client;
+    private static IServiceScopeFactory _scopeFactory;
+    private static WebApplicationFactory<Program> _factory;
+    protected static HttpClient FactoryClient  { get; private set; }
 
     [SetUp]
     public async Task TestSetUp()
     {
-        _factory = new TestingWebApplicationFactory();
-        _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
-        _client = _factory.CreateClient(new WebApplicationFactoryClientOptions());
+        _factory = FunctionalTestFixture.Factory;
+        _scopeFactory = FunctionalTestFixture.ScopeFactory;
+        FactoryClient = _factory.CreateClient(new WebApplicationFactoryClientOptions());
         
         // seed root user so tests won't always have user as super admin
         await AddNewSuperAdmin();

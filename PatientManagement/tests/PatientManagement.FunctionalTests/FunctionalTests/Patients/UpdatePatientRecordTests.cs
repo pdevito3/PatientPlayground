@@ -19,12 +19,12 @@ public class UpdatePatientRecordTests : TestBase
         var updatedPatientDto = new FakePatientForUpdateDto { }.Generate();
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
         await InsertAsync(fakePatient);
 
         // Act
         var route = ApiRoutes.Patients.Put.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedPatientDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedPatientDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -41,7 +41,7 @@ public class UpdatePatientRecordTests : TestBase
 
         // Act
         var route = ApiRoutes.Patients.Put.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedPatientDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedPatientDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -53,13 +53,13 @@ public class UpdatePatientRecordTests : TestBase
         // Arrange
         var fakePatient = FakePatient.Generate(new FakePatientForCreationDto().Generate());
         var updatedPatientDto = new FakePatientForUpdateDto { }.Generate();
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         await InsertAsync(fakePatient);
 
         // Act
         var route = ApiRoutes.Patients.Put.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
-        var result = await _client.PutJsonRequestAsync(route, updatedPatientDto);
+        var result = await FactoryClient.PutJsonRequestAsync(route, updatedPatientDto);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

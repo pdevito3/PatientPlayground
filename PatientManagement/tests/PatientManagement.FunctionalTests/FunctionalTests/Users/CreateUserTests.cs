@@ -18,11 +18,11 @@ public class CreateUserTests : TestBase
         var fakeUser = new FakeUserForCreationDto { }.Generate();
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
 
         // Act
         var route = ApiRoutes.Users.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakeUser);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakeUser);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -36,7 +36,7 @@ public class CreateUserTests : TestBase
 
         // Act
         var route = ApiRoutes.Users.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakeUser);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakeUser);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -47,11 +47,11 @@ public class CreateUserTests : TestBase
     {
         // Arrange
         var fakeUser = new FakeUserForCreationDto { }.Generate();
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         // Act
         var route = ApiRoutes.Users.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakeUser);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakeUser);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

@@ -18,11 +18,11 @@ public class CreateRolePermissionTests : TestBase
         var fakeRolePermission = new FakeRolePermissionForCreationDto { }.Generate();
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
 
         // Act
         var route = ApiRoutes.RolePermissions.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakeRolePermission);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakeRolePermission);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -36,7 +36,7 @@ public class CreateRolePermissionTests : TestBase
 
         // Act
         var route = ApiRoutes.RolePermissions.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakeRolePermission);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakeRolePermission);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -47,11 +47,11 @@ public class CreateRolePermissionTests : TestBase
     {
         // Arrange
         var fakeRolePermission = new FakeRolePermissionForCreationDto { }.Generate();
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         // Act
         var route = ApiRoutes.RolePermissions.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakeRolePermission);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakeRolePermission);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

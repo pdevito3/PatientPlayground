@@ -18,10 +18,10 @@ public class GetPatientListTests : TestBase
         
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
 
         // Act
-        var result = await _client.GetRequestAsync(ApiRoutes.Patients.GetList);
+        var result = await FactoryClient.GetRequestAsync(ApiRoutes.Patients.GetList);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -34,7 +34,7 @@ public class GetPatientListTests : TestBase
         // N/A
 
         // Act
-        var result = await _client.GetRequestAsync(ApiRoutes.Patients.GetList);
+        var result = await FactoryClient.GetRequestAsync(ApiRoutes.Patients.GetList);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -44,10 +44,10 @@ public class GetPatientListTests : TestBase
     public async Task get_patient_list_returns_forbidden_without_proper_scope()
     {
         // Arrange
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         // Act
-        var result = await _client.GetRequestAsync(ApiRoutes.Patients.GetList);
+        var result = await FactoryClient.GetRequestAsync(ApiRoutes.Patients.GetList);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

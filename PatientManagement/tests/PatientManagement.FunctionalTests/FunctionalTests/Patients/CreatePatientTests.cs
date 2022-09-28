@@ -18,11 +18,11 @@ public class CreatePatientTests : TestBase
         var fakePatient = new FakePatientForCreationDto { }.Generate();
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
 
         // Act
         var route = ApiRoutes.Patients.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakePatient);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakePatient);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Created);
@@ -36,7 +36,7 @@ public class CreatePatientTests : TestBase
 
         // Act
         var route = ApiRoutes.Patients.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakePatient);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakePatient);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -47,11 +47,11 @@ public class CreatePatientTests : TestBase
     {
         // Arrange
         var fakePatient = new FakePatientForCreationDto { }.Generate();
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         // Act
         var route = ApiRoutes.Patients.Create;
-        var result = await _client.PostJsonRequestAsync(route, fakePatient);
+        var result = await FactoryClient.PostJsonRequestAsync(route, fakePatient);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

@@ -18,12 +18,12 @@ public class DeletePatientTests : TestBase
         var fakePatient = FakePatient.Generate(new FakePatientForCreationDto().Generate());
 
         var user = await AddNewSuperAdmin();
-        _client.AddAuth(user.Identifier);
+        FactoryClient.AddAuth(user.Identifier);
         await InsertAsync(fakePatient);
 
         // Act
         var route = ApiRoutes.Patients.Delete.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
-        var result = await _client.DeleteRequestAsync(route);
+        var result = await FactoryClient.DeleteRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -39,7 +39,7 @@ public class DeletePatientTests : TestBase
 
         // Act
         var route = ApiRoutes.Patients.Delete.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
-        var result = await _client.DeleteRequestAsync(route);
+        var result = await FactoryClient.DeleteRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -50,13 +50,13 @@ public class DeletePatientTests : TestBase
     {
         // Arrange
         var fakePatient = FakePatient.Generate(new FakePatientForCreationDto().Generate());
-        _client.AddAuth();
+        FactoryClient.AddAuth();
 
         await InsertAsync(fakePatient);
 
         // Act
         var route = ApiRoutes.Patients.Delete.Replace(ApiRoutes.Patients.Id, fakePatient.Id.ToString());
-        var result = await _client.DeleteRequestAsync(route);
+        var result = await FactoryClient.DeleteRequestAsync(route);
 
         // Assert
         result.StatusCode.Should().Be(HttpStatusCode.Forbidden);

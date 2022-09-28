@@ -12,12 +12,7 @@ public static class ServiceRegistration
     public static void AddInfrastructure(this IServiceCollection services, IWebHostEnvironment env)
     {
         // DbContext -- Do Not Delete
-        if (env.IsEnvironment(Consts.Testing.FunctionalTestingEnvName))
-        {
-            services.AddDbContext<PatientManagementDbContext>(options =>
-                options.UseInMemoryDatabase($"PatientManagement"));
-        }
-        else
+        if (!env.IsEnvironment(Consts.Testing.FunctionalTestingEnvName))
         {
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
             if(string.IsNullOrEmpty(connectionString))
