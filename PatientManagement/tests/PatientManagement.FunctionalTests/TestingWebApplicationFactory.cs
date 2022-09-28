@@ -36,12 +36,6 @@ public class TestingWebApplicationFactory : WebApplicationFactory<Program>
             typeAdapterConfig.Scan(Assembly.GetExecutingAssembly());
             var mapperConfig = new Mapper(typeAdapterConfig);
             services.AddSingleton<IMapper>(mapperConfig);
-            
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-            services.AddDbContext<PatientManagementDbContext>(options =>
-                options.UseNpgsql(connectionString,
-                    dbBuilder => dbBuilder.MigrationsAssembly(typeof(PatientManagementDbContext).Assembly.FullName))
-                    .UseSnakeCaseNamingConvention());
         });
         
         return base.CreateHost(builder);
