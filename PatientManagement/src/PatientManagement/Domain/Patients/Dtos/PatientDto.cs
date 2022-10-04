@@ -7,7 +7,7 @@ public sealed class PatientDto
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public LifespanDto Lifespan { get; set; }
+        public LifespanDto Lifespan { get; set; } = new LifespanDto();
         public string Race { get; set; }
         public string Ethnicity { get; set; }
         public string Sex { get; set; }
