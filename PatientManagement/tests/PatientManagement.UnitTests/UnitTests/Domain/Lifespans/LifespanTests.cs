@@ -4,7 +4,6 @@ using Bogus;
 using FluentAssertions;
 using NUnit.Framework;
 using PatientManagement.Domain.Lifespans;
-using ValidationException = FluentValidation.ValidationException;
 
 [Parallelizable]
 public class LifespanTests
@@ -61,7 +60,7 @@ public class LifespanTests
     {
         var dob = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(1);
         var lifespan = () => new Lifespan(dob);
-        lifespan.Should().Throw<ValidationException>();
+        lifespan.Should().Throw<SharedKernel.Exceptions.ValidationException>();
     }
     
     [Test]
@@ -69,20 +68,20 @@ public class LifespanTests
     {
         var dob = DateOnly.FromDateTime(DateTime.UtcNow).AddYears(120);
         var lifespan = () => new Lifespan(dob);
-        lifespan.Should().Throw<ValidationException>();
+        lifespan.Should().Throw<SharedKernel.Exceptions.ValidationException>();
     }
     
     [Test]
     public void can_not_be_less_than_0_years_using_age()
     {
         var lifespan = () => new Lifespan(-1);
-        lifespan.Should().Throw<ValidationException>();
+        lifespan.Should().Throw<SharedKernel.Exceptions.ValidationException>();
     }
     
     [Test]
     public void can_not_be_more_than_120_years_using_age()
     {
         var lifespan = () => new Lifespan(121);
-        lifespan.Should().Throw<ValidationException>();
+        lifespan.Should().Throw<SharedKernel.Exceptions.ValidationException>();
     }
 }
