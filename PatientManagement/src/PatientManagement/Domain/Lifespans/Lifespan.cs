@@ -2,7 +2,7 @@ namespace PatientManagement.Domain.Lifespans;
 
 using System.ComponentModel.DataAnnotations.Schema;
 using SharedKernel.Domain;
-using FluentValidation;
+using SharedKernel.Exceptions;
 
 public sealed class Lifespan : ValueObject
 {
@@ -55,9 +55,9 @@ public sealed class Lifespan : ValueObject
     private void CreateLifespanFromAge(int ageInYears)
     {
         if (ageInYears < 0)
-            throw new FluentValidation.ValidationException("Age can not be less than zero years.");
+            throw new ValidationException("Lifespan","Age can not be less than zero years.");
         if (ageInYears > 120)
-            throw new FluentValidation.ValidationException("Age can not be more than 120 years.");
+            throw new ValidationException("Lifespan","Age can not be more than 120 years.");
         
         Age = ageInYears;
         DateOfBirth = null;
@@ -66,7 +66,8 @@ public sealed class Lifespan : ValueObject
     private void CreateLifespanFromDateOfBirth(DateOnly dob)
     {
         if (dob.ToDateTime(TimeOnly.MinValue) > DateTime.UtcNow)
-            throw new FluentValidation.ValidationException("Date of birth must be in the past");
+            throw new ValidationException("Lifespan", "Date of birth must be in the past");
+        
         
         DateOfBirth = dob;
         Age = GetAgeInYears(dob);
